@@ -1,3 +1,7 @@
+import { cache } from "react";
+
+import { IMessage } from "@/app/types/message";
+
 import sql from "better-sqlite3";
 
 const db = new sql("messages.db");
@@ -16,7 +20,7 @@ export function addMessage(message: string) {
   db.prepare("INSERT INTO messages (text) VALUES (?)").run(message);
 }
 
-export function getMessages() {
+export const getMessages = cache(function getMessages(): IMessage[] {
   console.log("Fetching messages from db");
-  return db.prepare("SELECT * FROM messages").all();
-}
+  return db.prepare("SELECT * FROM messages").all() as IMessage[];
+});

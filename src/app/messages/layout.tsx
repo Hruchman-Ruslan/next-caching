@@ -1,13 +1,15 @@
+import { getMessages } from "@/lib/message";
+
 export interface MessageLayoutProps {
   children: React.ReactNode;
 }
 
-export default async function MessageLayout({ children }: MessageLayoutProps) {
-  const response = await fetch("http://localhost:8080/messages", {
-    cache: "no-store",
-    // no cache response
-  });
-  const messages = await response.json();
+export default function MessageLayout({ children }: MessageLayoutProps) {
+  // const response = await fetch("http://localhost:8080/messages");
+  // const messages = await response.json();
+  // const totalMessages = messages.length;
+
+  const messages = getMessages();
   const totalMessages = messages.length;
 
   return (
