@@ -11,7 +11,13 @@ export default async function MessagePage({}: MessagePageProps) {
   // unstable_noStore();
   // no cache
 
+  // const response = await fetch("http://localhost:8080/messages", {
+  //   next: { tags: ["msg"] },
+  // });
+  // revalidateTag remove cache with tag msg
+
   const response = await fetch("http://localhost:8080/messages");
+
   const messages = await response.json();
 
   if (!messages || messages.length === 0) {
