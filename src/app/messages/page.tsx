@@ -4,9 +4,10 @@ export interface MessagePageProps {}
 
 export default async function MessagePage({}: MessagePageProps) {
   const response = await fetch("http://localhost:8080/messages", {
-    headers: {
-      "X-ID": "page",
+    next: {
+      revalidate: 5,
     },
+    // interval between response
   });
   const messages = await response.json();
 
