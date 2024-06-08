@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { unstable_cache } from "next/cache";
 
 import { IMessage } from "@/app/types/message";
 
@@ -20,7 +21,17 @@ export function addMessage(message: string) {
   db.prepare("INSERT INTO messages (text) VALUES (?)").run(message);
 }
 
-export const getMessages = cache(function getMessages(): IMessage[] {
-  console.log("Fetching messages from db");
-  return db.prepare("SELECT * FROM messages").all() as IMessage[];
-});
+// export const getMessages = cache(function getMessages(): IMessage[] {
+//   console.log("Fetching messages from db");
+//   return db.prepare("SELECT * FROM messages").all() as IMessage[];
+// });
+
+export const getMessages = unstable_cache(
+  cache(function getMessages(): Promise<IMessage[]> {
+    console.log("Fetching messages from db");
+    const messages = db.prepare("SELECT * FROM messages").all() as IMessage[];
+    return Promise.resolve(messages);
+  }),
+  ["messages"],
+  { tags: ["msg"] }
+);

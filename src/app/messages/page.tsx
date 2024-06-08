@@ -9,7 +9,7 @@ export interface MessagePageProps {}
 // export const revalidate = 5;
 // export const dynamic = "force-dynamic";
 
-export default function MessagePage({}: MessagePageProps) {
+export default async function MessagePage({}: MessagePageProps) {
   // unstable_noStore();
   // no cache
 
@@ -22,7 +22,7 @@ export default function MessagePage({}: MessagePageProps) {
 
   // const messages = await response.json();
 
-  const messages = getMessages();
+  const messages = await getMessages();
 
   if (!messages || messages.length === 0) {
     return <p>No messages found</p>;
