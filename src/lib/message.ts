@@ -32,5 +32,6 @@ export const getMessages = unstable_cache(
     const messages = db.prepare("SELECT * FROM messages").all() as IMessage[];
     return Promise.resolve(messages);
   }),
-  ["messages"]
+  ["messages"],
+  { tags: ["msg"] }
 );
